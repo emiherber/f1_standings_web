@@ -13,7 +13,14 @@ declare module '@vue/runtime-core' {
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
-const api = axios.create({ baseURL: 'https://api.example.com' });
+const api = axios.create({ baseURL: 'https://formula-1-standings.p.rapidapi.com/' });
+
+api.interceptors.request.use(config => {
+  config.headers = {
+    'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
+    'X-RapidAPI-Host': process.env.RAPIDAPI_HOST
+  }
+})
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
